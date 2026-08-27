@@ -142,7 +142,9 @@ ${essayText}
     throw new Error("Anthropic response was truncated (hit max_tokens) before completing submit_correction");
   }
 
-  const toolUse = response.content.find((block) => block.type === "tool_use");
+  const toolUse = response.content.find(
+    (block: (typeof response.content)[number]) => block.type === "tool_use",
+  );
   if (!toolUse || toolUse.type !== "tool_use") {
     throw new Error("Anthropic response did not include a tool_use block for submit_correction");
   }
