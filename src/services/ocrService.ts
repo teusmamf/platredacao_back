@@ -1,3 +1,4 @@
+import type Anthropic from "@anthropic-ai/sdk";
 import { anthropic } from "../lib/anthropic.js";
 import { env } from "../config/env.js";
 
@@ -43,7 +44,9 @@ export async function transcribeHandwrittenEssay(params: {
     ],
   });
 
-  const textBlock = response.content.find((block) => block.type === "text");
+  const textBlock = response.content.find(
+    (block: Anthropic.ContentBlock) => block.type === "text",
+  );
   if (!textBlock || textBlock.type !== "text") {
     throw new Error("Anthropic response did not include transcribed text");
   }
